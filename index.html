@@ -3,74 +3,77 @@
 <head>
 <title>Flame On Restaurant</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
 <style>
 body{
 margin:0;
-font-family:Arial;
-background:#111;
+font-family:'Poppins',sans-serif;
+background:#0f0f0f;
 color:white;
-text-align:center;
 }
 nav{
+display:flex;
+justify-content:space-between;
+padding:15px 30px;
 background:black;
-padding:15px;
-color:#ff3c00;
-font-size:22px;
+position:fixed;
+width:100%;
+top:0;
+}
+nav a{
+color:white;
+text-decoration:none;
+margin-left:15px;
 }
 .hero{
-padding:60px 20px;
-background:#222;
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+background:linear-gradient(to right,#ff3c00,#ff7300);
+animation:fadeIn 2s ease-in;
+text-align:center;
 }
-button{
-padding:10px 20px;
-background:#ff3c00;
+.hero h1{
+font-size:40px;
+}
+.btn{
+padding:12px 25px;
+background:black;
 color:white;
 border:none;
-margin:10px;
+border-radius:30px;
+margin-top:20px;
+cursor:pointer;
+transition:0.3s;
 }
-.menu{
-padding:30px;
+.btn:hover{
+background:white;
+color:black;
 }
-.card{
-background:#333;
-margin:15px;
-padding:15px;
-border-radius:10px;
+@keyframes fadeIn{
+from{opacity:0}
+to{opacity:1}
 }
 </style>
 </head>
 <body>
 
-<nav>🔥 Flame On - Jajpur</nav>
+<nav>
+<div>🔥 Flame On</div>
+<div>
+<a href="menu.html">Menu</a>
+<a href="cart.html">Cart</a>
+<a href="admin.html">Admin</a>
+</div>
+</nav>
 
 <div class="hero">
-<h2>Where Taste Meets Fire</h2>
-<p>Best Multicuisine Restaurant in Jajpur</p>
-<button onclick="alert('Call: 9090820969')">Call Now</button>
+<h1>Welcome to Flame On</h1>
+<p>Where Taste Meets Fire 🔥</p>
+<a href="menu.html"><button class="btn">Order Now</button></a>
 </div>
-
-<div class="menu">
-<h2>Our Menu</h2>
-
-<div class="card">
-<h3>Chicken Biryani</h3>
-<p>₹180</p>
-</div>
-
-<div class="card">
-<h3>Butter Chicken</h3>
-<p>₹200</p>
-</div>
-
-<div class="card">
-<h3>Veg Noodles</h3>
-<p>₹120</p>
-</div>
-
-</div>
-
-<p>📍 Gobind Nagar, Jajpur</p>
-<p>📞 9090820969</p>
 
 </body>
 </html>
