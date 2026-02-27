@@ -20,24 +20,31 @@ font-size:22px;
 font-weight:bold;
 }
 
-.contact-bar{
+.top-bar{
 text-align:center;
 background:#000;
 padding:10px;
-font-size:14px;
 }
 
-.contact-bar a{
+.top-bar a{
 color:#ff3c00;
 text-decoration:none;
 }
 
-.section{
-padding:15px;
+.search-box{
+padding:10px;
+text-align:center;
+background:#1a1a1a;
+}
+
+.search-box input{
+width:80%;
+padding:8px;
 }
 
 .category{
 margin-top:25px;
+padding:0 15px;
 }
 
 .category h2{
@@ -55,19 +62,15 @@ border-bottom:1px solid #333;
 
 .qty{
 display:flex;
-align-items:center;
 gap:5px;
-}
-
-.qty button{
-padding:3px 8px;
+align-items:center;
 }
 
 button{
 background:#ff3c00;
 color:white;
 border:none;
-padding:5px 12px;
+padding:5px 10px;
 cursor:pointer;
 }
 
@@ -81,11 +84,6 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 }
-
-input{
-padding:8px;
-width:60%;
-}
 </style>
 </head>
 
@@ -93,24 +91,16 @@ width:60%;
 
 <header>🔥 Flame On Restaurant</header>
 
-<div class="contact-bar">
+<div class="top-bar">
 📞 <a href="tel:+919090820969">+91 90908 20969</a> |
 <a href="tel:+919090691003">+91 9090691003</a>
 </div>
 
-<div class="section" id="menu"></div>
-
-<div class="section">
-<h2 style="color:#ff3c00;">🎉 Catering Service Available</h2>
-<p>Wedding | Birthday | Corporate | House Functions</p>
+<div class="search-box">
+<input type="text" id="search" placeholder="Search food..." onkeyup="renderMenu()">
 </div>
 
-<div class="section">
-<h2 style="color:#ff3c00;">📦 Order Tracking</h2>
-<input type="text" id="orderId" placeholder="Enter Order ID">
-<button onclick="trackOrder()">Track</button>
-<p id="trackResult"></p>
-</div>
+<div id="menu"></div>
 
 <div id="cart">
 <div>Total: ₹<span id="total">0</span></div>
@@ -124,8 +114,7 @@ const menu = [
 category:"STARTERS",
 items:[
 {name:"Crispy Corn",price:120},
-{name:"French Fries",price:60},
-{name:"Cheese Balls",price:80},
+{name:"Paneer Pakoda",price:100},
 {name:"Chicken Lollipop",price:120},
 {name:"Chicken 65",price:140}
 ]
@@ -133,7 +122,6 @@ items:[
 {
 category:"BIRYANI",
 items:[
-{name:"Chicken Biryani",price:120},
 {name:"Special Chicken Biryani",price:150},
 {name:"Mutton Biryani",price:250},
 {name:"Veg Biryani",price:100}
@@ -143,18 +131,26 @@ items:[
 category:"BURGERS",
 items:[
 {name:"Veg Patty Burger",price:70},
-{name:"Chicken Patty Burger",price:80},
-{name:"Double Cheese Chicken Burger",price:90}
+{name:"Chicken Patty Burger",price:80}
 ]
 }
 ];
 
 let cart={};
-let total=0;
 
+function renderMenu(){
+const search=document.getElementById("search").value.toLowerCase();
 const menuDiv=document.getElementById("menu");
+menuDiv.innerHTML="";
 
 menu.forEach(section=>{
+
+const filteredItems=section.items.filter(item =>
+item.name.toLowerCase().includes(search)
+);
+
+if(filteredItems.length===0) return;
+
 const categoryDiv=document.createElement("div");
 categoryDiv.className="category";
 
@@ -162,7 +158,10 @@ const heading=document.createElement("h2");
 heading.innerText=section.category;
 categoryDiv.appendChild(heading);
 
-section.items.forEach(item=>{
+filteredItems.forEach(item=>{
+
+if(!cart[item.name]) cart[item.name]=0;
+
 const itemDiv=document.createElement("div");
 itemDiv.className="item";
 
@@ -170,7 +169,7 @@ itemDiv.innerHTML=`
 <span>${item.name} - ₹${item.price}</span>
 <div class="qty">
 <button onclick="changeQty('${item.name}',${item.price},-1)">-</button>
-<span id="qty-${item.name}">0</span>
+<span>${cart[item.name]}</span>
 <button onclick="changeQty('${item.name}',${item.price},1)">+</button>
 </div>
 `;
@@ -179,25 +178,22 @@ categoryDiv.appendChild(itemDiv);
 });
 
 menuDiv.appendChild(categoryDiv);
+
 });
+}
 
 function changeQty(name,price,change){
-if(!cart[name]) cart[name]=0;
-
 cart[name]+=change;
-
 if(cart[name]<0) cart[name]=0;
-
-document.getElementById("qty-"+name).innerText=cart[name];
-
+renderMenu();
 calculateTotal();
 }
 
 function calculateTotal(){
-total=0;
+let total=0;
 for(let item in cart){
-const menuItem=findPrice(item);
-total+=menuItem*cart[item];
+const price=findPrice(item);
+total+=price*cart[item];
 }
 document.getElementById("total").innerText=total;
 }
@@ -212,7 +208,9 @@ return 0;
 }
 
 function sendWhatsApp(){
-if(total===0){
+let total=document.getElementById("total").innerText;
+
+if(total==0){
 alert("Please add items first!");
 return;
 }
@@ -230,16 +228,7 @@ message+="%0ATotal: ₹"+total;
 window.open("https://wa.me/919090820969?text="+message);
 }
 
-function trackOrder(){
-const id=document.getElementById("orderId").value;
-
-if(id===""){
-document.getElementById("trackResult").innerText="Enter Order ID";
-}else{
-document.getElementById("trackResult").innerText=
-"Order "+id+" is being prepared 🍽️";
-}
-}
+renderMenu();
 
 </script>
 
