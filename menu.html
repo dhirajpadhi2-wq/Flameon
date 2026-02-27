@@ -542,7 +542,14 @@ items:[
 ]
 }
 ];
+let savedFoods = JSON.parse(localStorage.getItem("foods")) || [];
 
+if(savedFoods.length > 0){
+  menu.push({
+    category: "ADMIN ADDED ITEMS",
+    items: savedFoods
+  });
+}
 
 let cart={};
 function trackOrder(){
