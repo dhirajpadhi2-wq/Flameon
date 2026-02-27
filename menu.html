@@ -1,43 +1,147 @@
-heading.innerText = section.category;
-menuDiv.appendChild(heading);
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Flame On Restaurant</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-section.items.forEach(item => {
+  <style>
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      background:#111;
+      color:white;
+    }
 
-const div = document.createElement("div");
-div.className = "menu-item";
+    header{
+      background:#ff3c00;
+      padding:15px;
+      text-align:center;
+      font-size:22px;
+      font-weight:bold;
+    }
 
-div.innerHTML = `
-<div>
-<strong>${item.name}</strong><br>
-₹${item.price}
+    #menu{
+      padding:15px;
+    }
+
+    .category{
+      margin-top:25px;
+    }
+
+    .category h2{
+      border-bottom:2px solid #ff3c00;
+      padding-bottom:5px;
+    }
+
+    .item{
+      display:flex;
+      justify-content:space-between;
+      padding:10px 0;
+      border-bottom:1px solid #333;
+    }
+
+    button{
+      background:#ff3c00;
+      color:white;
+      border:none;
+      padding:5px 12px;
+      cursor:pointer;
+    }
+
+    #cart{
+      position:fixed;
+      bottom:0;
+      width:100%;
+      background:black;
+      padding:10px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  🔥 Flame On Restaurant
+</header>
+
+<div id="menu"></div>
+
+<div id="cart">
+  <div>Total: ₹<span id="total">0</span></div>
+  <button onclick="sendWhatsApp()">Order Now</button>
 </div>
-<button onclick="addToCart('${item.name}', ${item.price})">
-Add
-</button>
-`;
 
-menuDiv.appendChild(div);
+<script>
 
-});
+const menu = [
+  {
+    category: "STARTERS",
+    items: [
+      {name:"Crispy Corn", price:120},
+      {name:"French Fries", price:60},
+      {name:"Cheese Balls", price:80}
+    ]
+  },
+  {
+    category: "BURGERS",
+    items: [
+      {name:"Veg Burger", price:70},
+      {name:"Chicken Burger", price:80}
+    ]
+  }
+];
+
+let total = 0;
+let cart = [];
+
+const menuDiv = document.getElementById("menu");
+
+menu.forEach(section => {
+
+  const categoryDiv = document.createElement("div");
+  categoryDiv.className = "category";
+
+  const heading = document.createElement("h2");
+  heading.innerText = section.category;
+  categoryDiv.appendChild(heading);
+
+  section.items.forEach(item => {
+
+    const itemDiv = document.createElement("div");
+    itemDiv.className = "item";
+
+    itemDiv.innerHTML = `
+      <span>${item.name} - ₹${item.price}</span>
+      <button onclick="addToCart('${item.name}', ${item.price})">Add</button>
+    `;
+
+    categoryDiv.appendChild(itemDiv);
+  });
+
+  menuDiv.appendChild(categoryDiv);
 
 });
 
 function addToCart(name, price){
-total += price;
-cartItems.push(name);
-document.getElementById("total").innerText = total;
+  total += price;
+  cart.push(name);
+  document.getElementById("total").innerText = total;
 }
 
 function sendWhatsApp(){
+  let message = "🔥 Flame On Order:%0A%0A";
+  cart.forEach(item => {
+    message += "• " + item + "%0A";
+  });
+  message += "%0ATotal: ₹" + total;
 
-let message = "🔥 Flame On Order:%0A%0A";
-
-cartItems.forEach(item=>{
-message += "• " + item + "%0A";
-});
-
-message += "%0ATotal: ₹" + total;
-
-window.open("https://wa.me/919090820969?text=" + message);
-
+  window.open("https://wa.me/919090820969?text=" + message);
 }
+
+</script>
+
+</body>
+</html>
