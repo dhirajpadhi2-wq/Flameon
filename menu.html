@@ -46,95 +46,67 @@ padding:10px;
 Total: ₹<span id="total">0</span>
 <button onclick="sendWhatsApp()">Order on WhatsApp</button>
 </div>
-
 <script>
-const menu = [
 
+const menu = [
 {
 category:"STARTERS - VEG",
 items:[
-{name:"CRISPY CORN", price:120, img:"https://source.unsplash.com/400x300/?corn"},
-{name:"CRISPY CHILLY BABYCORN", price:150, img:"https://source.unsplash.com/400x300/?babycorn"},
-{name:"CORN SALT & PAPER", price:150, img:"https://source.unsplash.com/400x300/?corn-snack"},
-{name:"MUSHROOM SALT & PAPER", price:150, img:"https://source.unsplash.com/400x300/?mushroom"},
-{name:"PANEER SALT AND PAPER", price:150, img:"https://source.unsplash.com/400x300/?paneer"},
-{name:"PANEER SINGPURI STICK", price:170, img:"https://source.unsplash.com/400x300/?paneer-stick"},
-{name:"PANEER PAKODA", price:100, img:"https://source.unsplash.com/400x300/?paneer-pakoda"},
-{name:"PANEER TAKATAK", price:150, img:"https://source.unsplash.com/400x300/?paneer-curry"},
-{name:"MUSHROOM PAKODA", price:100, img:"https://source.unsplash.com/400x300/?mushroom-pakoda"},
-{name:"VEG FINGER", price:80, img:"https://source.unsplash.com/400x300/?veg-snacks"},
-{name:"PATATO BYTES", price:70, img:"https://source.unsplash.com/400x300/?potato-bites"},
-{name:"FRENCH FRIES", price:60, img:"https://source.unsplash.com/400x300/?fries"},
-{name:"CHEESE BALLS", price:80, img:"https://source.unsplash.com/400x300/?cheese-balls"},
-{name:"VEG CUTLET", price:80, img:"https://source.unsplash.com/400x300/?veg-cutlet"}
+{name:"CRISPY CORN", price:120},
+{name:"FRENCH FRIES", price:60},
+{name:"CHEESE BALLS", price:80}
 ]
 },
-
-{
-category:"STARTERS - NON VEG",
-items:[
-{name:"CRISPY CHICKEN WINGS", price:100, img:"https://source.unsplash.com/400x300/?chicken-wings"},
-{name:"CHICKEN POPCORN", price:100, img:"https://source.unsplash.com/400x300/?chicken-popcorn"},
-{name:"CHICKEN LOLLIPOP", price:120, img:"https://source.unsplash.com/400x300/?chicken-lollipop"},
-{name:"CHICKEN 65 (HALF)", price:140, img:"https://source.unsplash.com/400x300/?chicken-65"},
-{name:"SAUCE TOSSED CHICKEN", price:200, img:"https://source.unsplash.com/400x300/?chicken-sauce"},
-{name:"CRISPY PRAWN", price:200, img:"https://source.unsplash.com/400x300/?prawn-fry"},
-{name:"PRAWN 65", price:250, img:"https://source.unsplash.com/400x300/?prawn"},
-{name:"FISH FINGER", price:220, img:"https://source.unsplash.com/400x300/?fish-finger"}
-]
-},
-
 {
 category:"BURGER",
 items:[
-{name:"VEG PATTY BURGER", price:70, img:"https://source.unsplash.com/400x300/?burger"},
-{name:"CHEESE PATTY BURGER", price:80, img:"https://source.unsplash.com/400x300/?cheese-burger"},
-{name:"CRISPY CHICKEN BURGER", price:80, img:"https://source.unsplash.com/400x300/?chicken-burger"},
-{name:"DOUBLE CHEESE CHICKEN BURGER", price:90, img:"https://source.unsplash.com/400x300/?double-burger"}
-]
-},
-
-{
-category:"MOMO",
-items:[
-{name:"VEG MOMO", price:50, img:"https://source.unsplash.com/400x300/?momos"},
-{name:"NON-VEG MOMO", price:60, img:"https://source.unsplash.com/400x300/?chicken-momos"},
-{name:"FRIED VEG MOMO", price:60, img:"https://source.unsplash.com/400x300/?fried-momos"},
-{name:"PAN FRIED MOMO", price:80, img:"https://source.unsplash.com/400x300/?pan-fried-momos"}
-]
-},
-
-{
-category:"NOODLES / PASTA",
-items:[
-{name:"MIX VEG NOODLES", price:80, img:"https://source.unsplash.com/400x300/?veg-noodles"},
-{name:"PANEER NOODLES", price:80, img:"https://source.unsplash.com/400x300/?paneer-noodles"},
-{name:"MUSHROOM NOODLES", price:80, img:"https://source.unsplash.com/400x300/?mushroom-noodles"},
-{name:"SCHEZWAN NOODLES (VEG)", price:90, img:"https://source.unsplash.com/400x300/?schezwan-noodles"},
-{name:"CHILLY GARLIC NOODLES (VEG)", price:100, img:"https://source.unsplash.com/400x300/?garlic-noodles"},
-{name:"WHITE SAUCE PASTA", price:120, img:"https://source.unsplash.com/400x300/?white-sauce-pasta"},
-{name:"RED SAUCE PASTA", price:120, img:"https://source.unsplash.com/400x300/?red-sauce-pasta"},
-{name:"EGG NOODLES", price:70, img:"https://source.unsplash.com/400x300/?egg-noodles"},
-{name:"CHICKEN NOODLES", price:70, img:"https://source.unsplash.com/400x300/?chicken-noodles"},
-{name:"EGG CHICKEN NOODLES", price:80, img:"https://source.unsplash.com/400x300/?egg-chicken-noodles"},
-{name:"SCHEZWAN NOODLES (NON VEG)", price:100, img:"https://source.unsplash.com/400x300/?schezwan-chicken-noodles"},
-{name:"PRAWN MIX NOODLES", price:120, img:"https://source.unsplash.com/400x300/?prawn-noodles"}
-]
-},
-
-{
-category:"BIRIYANI SPECIAL",
-items:[
-{name:"SPECIAL CHICKEN BIRIYANI", price:150, img:"https://source.unsplash.com/400x300/?chicken-biryani"},
-{name:"CHICKEN BIRIYANI (HALF)", price:120, img:"https://source.unsplash.com/400x300/?biryani"},
-{name:"CHICKEN TIKKA BIRIYANI", price:150, img:"https://source.unsplash.com/400x300/?tikka-biryani"},
-{name:"TANDOOR CHICKEN BIRIYANI", price:200, img:"https://source.unsplash.com/400x300/?tandoori-biryani"},
-{name:"EGG BIRIYANI", price:100, img:"https://source.unsplash.com/400x300/?egg-biryani"},
-{name:"PRAWN BIRIYANI", price:200, img:"https://source.unsplash.com/400x300/?prawn-biryani"},
-{name:"MUTTON BIRIYANI", price:250, img:"https://source.unsplash.com/400x300/?mutton-biryani"},
-{name:"FISH BIRIYANI", price:120, img:"https://source.unsplash.com/400x300/?fish-biryani"},
-{name:"VEG BIRIYANI", price:100, img:"https://source.unsplash.com/400x300/?veg-biryani"}
+{name:"VEG BURGER", price:70},
+{name:"CHICKEN BURGER", price:80}
 ]
 }
-
 ];
+
+let total = 0;
+let cartItems = [];
+
+const menuDiv = document.getElementById("menu");
+
+menu.forEach(section => {
+
+const heading = document.createElement("h2");
+heading.innerText = section.category;
+menuDiv.appendChild(heading);
+
+section.items.forEach(item => {
+
+const div = document.createElement("div");
+div.className = "menu-item";
+
+div.innerHTML = `
+<span>${item.name} - ₹${item.price}</span>
+<button onclick="addToCart('${item.name}', ${item.price})">Add</button>
+`;
+
+menuDiv.appendChild(div);
+
+});
+
+});
+
+function addToCart(name, price){
+total += price;
+cartItems.push(name);
+document.getElementById("total").innerText = total;
+}
+
+function sendWhatsApp(){
+let message = "Order Details:%0A";
+cartItems.forEach(item=>{
+message += item + "%0A";
+});
+message += "Total: ₹" + total;
+
+window.open("https://wa.me/919090820969?text=" + message);
+}
+
+</script>
