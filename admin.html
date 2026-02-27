@@ -1,24 +1,49 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Admin Panel</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body style="background:#111;color:white;text-align:center;font-family:Arial">
-
-<h1>Admin Panel</h1>
-
-<input id="food" placeholder="Food Name">
-<input id="price" placeholder="Price">
-<button onclick="addFood()">Add Food</button>
-
 <script>
-function addFood(){
-let food=document.getElementById("food").value;
-let price=document.getElementById("price").value;
-alert(food+" added at ₹"+price);
-}
-</script>
+function loadFoods(){
+  let foods = JSON.parse(localStorage.getItem("foods")) || [];
+  const foodList = document.getElementById("foodList");
+  foodList.innerHTML = "";
 
-</body>
-</html>
+  foods.forEach((item,index)=>{
+    const div = document.createElement("div");
+    div.innerHTML = `
+      ${item.name} - ₹${item.price}
+      <button onclick="deleteFood(${index})">Delete</button>
+    `;
+    foodList.appendChild(div);
+  });
+}
+
+function addFood(){
+  let food = document.getElementById("food").value;
+  let price = document.getElementById("price").value;
+
+  if(food==="" || price===""){
+    alert("Enter food name and price");
+    return;
+  }
+
+  let foods = JSON.parse(localStorage.getItem("foods")) || [];
+
+  foods.push({
+    name: food,
+    price: price
+  });
+
+  localStorage.setItem("foods", JSON.stringify(foods));
+
+  document.getElementById("food").value="";
+  document.getElementById("price").value="";
+
+  loadFoods();
+}
+
+function deleteFood(index){
+  let foods = JSON.parse(localStorage.getItem("foods"));
+  foods.splice(index,1);
+  localStorage.setItem("foods", JSON.stringify(foods));
+  loadFoods();
+}
+
+loadFoods();
+</script>
