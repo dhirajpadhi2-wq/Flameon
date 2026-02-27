@@ -687,7 +687,25 @@ message+="• "+item+" x"+cart[item]+"%0A";
 
 message+="%0ATotal: ₹"+total;
 message+="%0A%0AThank You!";
+  let newOrder = {
+  id: orderID,
+  items: {...cart},
+  total: total,
+  date: new Date().toLocaleString(),
+  status: "Pending"
+};
+let orders = JSON.parse(localStorage.getItem("orders")) || [];
 
+let newOrder = {
+  id: orderID,
+  items: {...cart},
+  total: total,
+  date: new Date().toLocaleString()
+};
+
+orders.push(newOrder);
+
+localStorage.setItem("orders", JSON.stringify(orders));
 window.open("https://wa.me/919090820969?text="+message);
 }
 
