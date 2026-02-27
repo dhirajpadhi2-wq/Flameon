@@ -1,4 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Panel - Flame On</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+  background:#111;
+  color:white;
+  font-family:Arial, sans-serif;
+  text-align:center;
+  margin:0;
+  padding:20px;
+}
+
+h1{
+  color:#ff3c00;
+}
+
+input{
+  padding:8px;
+  margin:5px;
+}
+
+button{
+  padding:6px 12px;
+  margin:5px;
+  background:#ff3c00;
+  color:white;
+  border:none;
+  cursor:pointer;
+}
+
+button:hover{
+  opacity:0.8;
+}
+
+.order-box{
+  border:1px solid #444;
+  margin:10px auto;
+  padding:10px;
+  width:90%;
+  max-width:500px;
+  background:#1a1a1a;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🔥 Flame On Admin Panel</h1>
+
+<h2>Total Daily Sales: ₹<span id="dailySales">0</span></h2>
+
+<h2>Add Food Item</h2>
+<input id="food" placeholder="Food Name">
+<input id="price" placeholder="Price">
+<button onclick="addFood()">Add Food</button>
+
+<h2>Food List</h2>
+<div id="foodList"></div>
+
+<h2>Order History</h2>
+<div id="orderHistory"></div>
+
 <script>
+
+// ================= FOOD SECTION =================
+
 function loadFoods(){
   let foods = JSON.parse(localStorage.getItem("foods")) || [];
   const foodList = document.getElementById("foodList");
@@ -45,5 +114,63 @@ function deleteFood(index){
   loadFoods();
 }
 
+// ================= ORDER SECTION =================
+
+function loadOrders(){
+  let orders = JSON.parse(localStorage.getItem("orders")) || [];
+  const historyDiv = document.getElementById("orderHistory");
+  const salesSpan = document.getElementById("dailySales");
+
+  historyDiv.innerHTML = "";
+  let totalSales = 0;
+
+  orders.forEach((order,index)=>{
+    totalSales += parseInt(order.total);
+
+    const div = document.createElement("div");
+    div.className="order-box";
+
+    div.innerHTML = `
+      <strong>Order ID:</strong> ${order.id}<br>
+      <strong>Date:</strong> ${order.date}<br>
+      <strong>Total:</strong> ₹${order.total}<br>
+      <strong>Status:</strong> ${order.status}<br><br>
+
+      <button onclick="changeStatus(${index})">Change Status</button>
+      <button onclick="deleteOrder(${index})">Delete</button>
+    `;
+
+    historyDiv.appendChild(div);
+  });
+
+  salesSpan.innerText = totalSales;
+}
+
+function deleteOrder(index){
+  let orders = JSON.parse(localStorage.getItem("orders"));
+  orders.splice(index,1);
+  localStorage.setItem("orders", JSON.stringify(orders));
+  loadOrders();
+}
+
+function changeStatus(index){
+  let orders = JSON.parse(localStorage.getItem("orders"));
+
+  if(orders[index].status==="Pending"){
+    orders[index].status="Delivered";
+  } else {
+    orders[index].status="Pending";
+  }
+
+  localStorage.setItem("orders", JSON.stringify(orders));
+  loadOrders();
+}
+
+// ================= LOAD ON START =================
 loadFoods();
+loadOrders();
+
 </script>
+
+</body>
+</html>
