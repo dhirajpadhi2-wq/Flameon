@@ -1,162 +1,106 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Flame On - Full Menu</title>
+<title>Flame On Menu</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-body{font-family:Arial;background:#111;color:white;margin:0}
-h1{text-align:center;padding:20px}
-.category{background:#ff3c00;padding:10px;margin-top:25px;text-align:center;font-weight:bold}
-.food{background:#222;margin:10px;padding:15px;border-radius:8px;display:flex;justify-content:space-between;align-items:center}
-button{background:#ff3c00;border:none;color:white;padding:5px 10px;margin:2px}
-.cart-box{background:#000;margin:15px;padding:15px;border-radius:10px}
-.qty-box{display:flex;align-items:center}
-.qty-box button{padding:3px 8px}
+body{
+font-family:Arial;
+margin:0;
+background:#111;
+color:white;
+}
+h2{
+background:#ff3c00;
+padding:10px;
+}
+.menu-item{
+display:flex;
+justify-content:space-between;
+padding:10px;
+border-bottom:1px solid #333;
+}
+button{
+background:#ff3c00;
+color:white;
+border:none;
+padding:5px 10px;
+cursor:pointer;
+}
+#cart{
+position:fixed;
+bottom:0;
+width:100%;
+background:black;
+padding:10px;
+}
 </style>
 </head>
 <body>
 
-<h1>🔥 Flame On Full Menu</h1>
+<h1 style="text-align:center;">🔥 Flame On Menu</h1>
+
 <div id="menu"></div>
 
-<h2 style="text-align:center;">🛒 Cart</h2>
-<div id="cart" class="cart-box"></div>
-<h3 id="total" style="text-align:center;"></h3>
-
-<div style="text-align:center;margin-bottom:30px;">
+<div id="cart">
+Total: ₹<span id="total">0</span>
 <button onclick="sendWhatsApp()">Order on WhatsApp</button>
 </div>
 
 <script>
 
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-const menuData = [
-{cat:"Biryani",name:"Chicken Biryani",price:180},
-{cat:"Biryani",name:"Mutton Biryani",price:250},
-{cat:"Biryani",name:"Egg Biryani",price:100},
-{cat:"Biryani",name:"Veg Biryani",price:100},
-
-{cat:"Starters",name:"Chicken Lollipop",price:120},
-{cat:"Starters",name:"Chicken 65",price:140},
-{cat:"Starters",name:"Paneer Pakoda",price:100},
-{cat:"Starters",name:"French Fries",price:60},
-
-{cat:"Burger",name:"Veg Burger",price:70},
-{cat:"Burger",name:"Chicken Burger",price:90},
-
-{cat:"Momo",name:"Veg Momo",price:50},
-{cat:"Momo",name:"Chicken Momo",price:60},
-
-{cat:"Chinese",name:"Veg Fried Rice",price:80},
-{cat:"Chinese",name:"Chicken Fried Rice",price:100},
-{cat:"Chinese",name:"Chilly Chicken",price:120},
-
-{cat:"Indian Curry",name:"Butter Chicken",price:200},
-{cat:"Indian Curry",name:"Paneer Butter Masala",price:150},
-{cat:"Indian Curry",name:"Mutton Curry",price:250},
-
-{cat:"Roti & Naan",name:"Roti",price:10},
-{cat:"Roti & Naan",name:"Butter Naan",price:25},
-{cat:"Roti & Naan",name:"Garlic Naan",price:30},
-
-{cat:"Beverages",name:"Cold Coffee",price:70},
-{cat:"Beverages",name:"Chocolate Shake",price:80}
+const menu = [
+{category:"STARTERS - VEG", items:[
+{name:"CRISPY CORN", price:120},
+{name:"CRISPY CHILLY BABYCORN", price:150},
+{name:"PANEER PAKODA", price:100},
+{name:"FRENCH FRIES", price:60}
+]},
+{category:"BURGER", items:[
+{name:"VEG PATTY BURGER", price:70},
+{name:"CRISPY CHICKEN BURGER", price:80}
+]},
+{category:"MOMO", items:[
+{name:"VEG MOMO", price:50},
+{name:"NON-VEG MOMO", price:60}
+]}
 ];
 
+let cart=[];
+let total=0;
+
 const menuDiv=document.getElementById("menu");
-const categories=[...new Set(menuData.map(i=>i.cat))];
 
-categories.forEach(c=>{
-let title=document.createElement("div");
-title.className="category";
-title.innerText=c;
-menuDiv.appendChild(title);
+menu.forEach(section=>{
+let h=document.createElement("h2");
+h.innerText=section.category;
+menuDiv.appendChild(h);
 
-menuData.filter(i=>i.cat===c).forEach(item=>{
-let food=document.createElement("div");
-food.className="food";
-food.innerHTML=`
-<div>${item.name}<br>₹${item.price}</div>
+section.items.forEach(item=>{
+let div=document.createElement("div");
+div.className="menu-item";
+div.innerHTML=`
+<span>${item.name} - ₹${item.price}</span>
 <button onclick="addToCart('${item.name}',${item.price})">Add</button>
 `;
-menuDiv.appendChild(food);
+menuDiv.appendChild(div);
 });
 });
 
 function addToCart(name,price){
-let existing=cart.find(i=>i.name===name);
-if(existing){
-existing.qty+=1;
-}else{
-cart.push({name,price,qty:1});
-}
-saveCart();
-renderCart();
-}
-
-function renderCart(){
-let cartDiv=document.getElementById("cart");
-cartDiv.innerHTML="";
-let total=0;
-
-cart.forEach((item,index)=>{
-total+=item.price*item.qty;
-cartDiv.innerHTML+=`
-<div style="margin:8px 0;">
-${item.name} - ₹${item.price} x ${item.qty}
-<div class="qty-box">
-<button onclick="decrease(${index})">-</button>
-<button onclick="increase(${index})">+</button>
-<button onclick="removeItem(${index})">❌</button>
-</div>
-</div>
-`;
-});
-
-document.getElementById("total").innerText="Total: ₹"+total;
-}
-
-function increase(i){
-cart[i].qty+=1;
-saveCart();
-renderCart();
-}
-
-function decrease(i){
-if(cart[i].qty>1){
-cart[i].qty-=1;
-}else{
-cart.splice(i,1);
-}
-saveCart();
-renderCart();
-}
-
-function removeItem(i){
-cart.splice(i,1);
-saveCart();
-renderCart();
-}
-
-function saveCart(){
-localStorage.setItem("cart",JSON.stringify(cart));
+cart.push({name,price});
+total+=price;
+document.getElementById("total").innerText=total;
 }
 
 function sendWhatsApp(){
-let message="🔥 Flame On Order:%0A";
-let total=0;
-
+let message="Order Details:%0A";
 cart.forEach(item=>{
-message+=item.name+" x "+item.qty+" = ₹"+(item.price*item.qty)+"%0A";
-total+=item.price*item.qty;
+message+=item.name+" - ₹"+item.price+"%0A";
 });
-
-message+="%0ATotal: ₹"+total;
+message+="Total: ₹"+total;
 window.open("https://wa.me/919090820969?text="+message);
 }
-
-renderCart();
 
 </script>
 
