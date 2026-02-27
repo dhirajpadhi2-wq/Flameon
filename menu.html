@@ -98,6 +98,12 @@ align-items:center;
 </div>
 
 <div class="search-box">
+<div style="text-align:center; padding:15px; background:#000;">
+<h3>Track Your Order</h3>
+<input type="text" id="trackInput" placeholder="Enter Order ID">
+<button onclick="trackOrder()">Track</button>
+<div id="trackingStatus" style="margin-top:10px;"></div>
+  </div>
 <input type="text" id="search" placeholder="Search food..." onkeyup="renderMenu()">
 </div>
 
@@ -472,7 +478,28 @@ items:[
 
 
 let cart={};
+function trackOrder(){
 
+let orderID = document.getElementById("trackInput").value;
+let statusDiv = document.getElementById("trackingStatus");
+
+if(!orderID){
+statusDiv.innerHTML = "⚠️ Please enter Order ID";
+return;
+}
+
+let stages = [
+"🟡 Order Placed",
+"🔵 Preparing Your Food",
+"🟣 Out For Delivery",
+"🟢 Delivered"
+];
+
+let randomStage = Math.floor(Math.random()*stages.length);
+
+statusDiv.innerHTML = "<b>Status:</b> " + stages[randomStage];
+
+}
 function renderMenu(){
 const search=document.getElementById("search").value.toLowerCase();
 const menuDiv=document.getElementById("menu");
@@ -551,7 +578,7 @@ return;
 }
 
 let orderID = "FO" + Math.floor(Math.random()*10000);
-
+alert("Your Order ID: " + orderID + "\nUse this ID to track your order.");
 let message="🔥 Flame On Restaurant%0A";
 message+="Order ID: "+orderID+"%0A%0A";
 
