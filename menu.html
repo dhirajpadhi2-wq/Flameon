@@ -25,15 +25,111 @@ button{padding:8px 15px;background:#ff3c00;color:white;border:none}
 <p>₹200</p>
 <button onclick="addToCart('Butter Chicken',200)">Add to Cart</button>
 </div>
-
 <script>
-function addToCart(name,price){
-let cart=JSON.parse(localStorage.getItem('cart'))||[];
-cart.push({name,price});
-localStorage.setItem('cart',JSON.stringify(cart));
-alert("Added to cart");
-}
-</script>
 
-</body>
-</html>
+const menuData = [
+
+/* ================= STARTERS - VEG ================= */
+
+{category:"Starters - Veg", name:"Crispy Corn", price:120},
+{category:"Starters - Veg", name:"Crispy Chilly Babycorn", price:150},
+{category:"Starters - Veg", name:"Corn Salt & Pepper", price:150},
+{category:"Starters - Veg", name:"Mushroom Salt & Pepper", price:150},
+{category:"Starters - Veg", name:"Paneer Salt & Pepper", price:150},
+{category:"Starters - Veg", name:"Paneer Singpuri Stick", price:170},
+{category:"Starters - Veg", name:"Paneer Pakoda", price:100},
+{category:"Starters - Veg", name:"Paneer Takatak", price:150},
+{category:"Starters - Veg", name:"Mushroom Pakoda", price:100},
+{category:"Starters - Veg", name:"Veg Finger", price:80},
+{category:"Starters - Veg", name:"Potato Bytes", price:70},
+{category:"Starters - Veg", name:"French Fries", price:60},
+{category:"Starters - Veg", name:"Cheese Balls", price:80},
+{category:"Starters - Veg", name:"Veg Cutlet", price:80},
+
+/* ================= STARTERS - NON VEG ================= */
+
+{category:"Starters - Non Veg", name:"Crispy Chicken Wings (4pcs)", price:100},
+{category:"Starters - Non Veg", name:"Chicken Popcorn", price:100},
+{category:"Starters - Non Veg", name:"Chicken Lollipop (4pcs)", price:120},
+{category:"Starters - Non Veg", name:"Chicken 65 (Half)", price:140},
+{category:"Starters - Non Veg", name:"Chicken Singapuri Stick", price:170},
+{category:"Starters - Non Veg", name:"Sauce Tossed Chicken", price:200},
+{category:"Starters - Non Veg", name:"Chicken Pakoda (Half)", price:60},
+{category:"Starters - Non Veg", name:"Crispy Prawn", price:200},
+{category:"Starters - Non Veg", name:"Prawn 65 (Half)", price:250},
+{category:"Starters - Non Veg", name:"Schezwان Prawn (Half)", price:250},
+
+/* ================= BURGER ================= */
+
+{category:"Burger - Veg", name:"Veg Patty Burger", price:70},
+{category:"Burger - Veg", name:"Cheese Patty Burger", price:80},
+{category:"Burger - Non Veg", name:"Crispy Chicken Burger", price:80},
+{category:"Burger - Non Veg", name:"Chicken Patty Burger", price:80},
+{category:"Burger - Non Veg", name:"Double Cheese Chicken Burger", price:90},
+
+/* ================= MOMO ================= */
+
+{category:"Momo", name:"Veg Momo", price:50},
+{category:"Momo", name:"Non Veg Momo", price:60},
+{category:"Momo", name:"Fried Veg Momo", price:60},
+{category:"Momo", name:"Non Veg Fried Momo", price:70},
+{category:"Momo", name:"Pan Fried Momo", price:80},
+
+/* ================= BIRIYANI ================= */
+
+{category:"Biryani", name:"Special Chicken Biryani", price:150},
+{category:"Biryani", name:"Chicken Biryani (Half)", price:120},
+{category:"Biryani", name:"Chicken Tikka Biryani (Half)", price:150},
+{category:"Biryani", name:"Tandoor Chicken Biryani", price:200},
+{category:"Biryani", name:"Egg Biryani", price:100},
+{category:"Biryani", name:"Prawn Biryani", price:200},
+{category:"Biryani", name:"Mutton Biryani", price:250},
+{category:"Biryani", name:"Fish Biryani", price:120},
+{category:"Biryani", name:"Veg Biryani", price:100},
+
+/* ================= CHINESE ================= */
+
+{category:"Chinese", name:"Chilly Paneer", price:120},
+{category:"Chinese", name:"Chilly Mushroom", price:120},
+{category:"Chinese", name:"Chilly Chicken", price:120},
+{category:"Chinese", name:"Chilly Prawn", price:200},
+{category:"Chinese", name:"Veg Noodles", price:80},
+{category:"Chinese", name:"Egg Noodles", price:90},
+{category:"Chinese", name:"Chicken Noodles", price:100},
+{category:"Chinese", name:"Veg Fried Rice", price:80},
+{category:"Chinese", name:"Egg Fried Rice", price:90},
+{category:"Chinese", name:"Chicken Fried Rice", price:100},
+
+/* ================= INDIAN CURRY ================= */
+
+{category:"Indian Curry", name:"Paneer Butter Masala", price:150},
+{category:"Indian Curry", name:"Kadai Paneer", price:150},
+{category:"Indian Curry", name:"Mushroom Masala", price:150},
+{category:"Indian Curry", name:"Chicken Butter Masala", price:150},
+{category:"Indian Curry", name:"Chicken Kadai", price:150},
+{category:"Indian Curry", name:"Mutton Curry", price:250},
+{category:"Indian Curry", name:"Fish Curry", price:120},
+{category:"Indian Curry", name:"Egg Curry", price:100},
+
+/* ================= ROTI & NAAN ================= */
+
+{category:"Roti & Naan", name:"Roti", price:10},
+{category:"Roti & Naan", name:"Butter Roti", price:15},
+{category:"Roti & Naan", name:"Naan", price:20},
+{category:"Roti & Naan", name:"Butter Naan", price:25},
+{category:"Roti & Naan", name:"Garlic Naan", price:30},
+
+/* ================= BEVERAGES ================= */
+
+{category:"Beverages", name:"Hot Tea", price:15},
+{category:"Beverages", name:"Hot Coffee", price:40},
+{category:"Beverages", name:"Fresh Lime Soda", price:40},
+{category:"Beverages", name:"Blue Lagoon Mojito", price:60},
+{category:"Beverages", name:"Green Apple Mojito", price:60},
+{category:"Beverages", name:"Mint Mojito", price:60},
+{category:"Beverages", name:"Cold Coffee", price:70},
+{category:"Beverages", name:"Chocolate Shake", price:80}
+
+];
+
+</script>
