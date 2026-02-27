@@ -152,7 +152,7 @@ font-size:16px;
     <a href="menu.html">🏠 Home</a>
     <a href="menu.html">🍔 Menu</a>
     <a href="catering.html">🍽 Catering</a>
-    <a href="tracking.html">📦 Track Order</a>
+    <a href="#tracking">📦 Track Order</a>
   </div>
 </header>
   
@@ -542,6 +542,7 @@ items:[
 ]
 }
 ];
+  
 let savedFoods = JSON.parse(localStorage.getItem("foods")) || [];
 
 if(savedFoods.length > 0){
@@ -628,7 +629,8 @@ categoryDiv.appendChild(itemDiv);
 });
 
 menuDiv.appendChild(categoryDiv);
-
+updateTotal();
+}
 });
 }
 
@@ -645,7 +647,7 @@ if(cart[name] < 0){
 }
 
 renderMenu();
-calculateTotal();
+updateTotal();
 }
 
 function calculateTotal(){
@@ -667,6 +669,7 @@ return 0;
 }
 
 function sendWhatsApp(){
+
 let total=document.getElementById("total").innerText;
 
 if(total==0){
@@ -675,7 +678,9 @@ return;
 }
 
 let orderID = "FO" + Math.floor(Math.random()*10000);
+
 alert("Your Order ID: " + orderID + "\nUse this ID to track your order.");
+
 let message="🔥 Flame On Restaurant%0A";
 message+="Order ID: "+orderID+"%0A%0A";
 
@@ -687,25 +692,22 @@ message+="• "+item+" x"+cart[item]+"%0A";
 
 message+="%0ATotal: ₹"+total;
 message+="%0A%0AThank You!";
-  let newOrder = {
-  id: orderID,
-  items: {...cart},
-  total: total,
-  date: new Date().toLocaleString(),
-  status: "Pending"
-};
+
+// Save order to localStorage
 let orders = JSON.parse(localStorage.getItem("orders")) || [];
 
 let newOrder = {
   id: orderID,
   items: {...cart},
   total: total,
-  date: new Date().toLocaleString()
+  date: new Date().toLocaleString(),
+  status: "Pending"
 };
 
 orders.push(newOrder);
 
 localStorage.setItem("orders", JSON.stringify(orders));
+
 window.open("https://wa.me/919090820969?text="+message);
 }
 
