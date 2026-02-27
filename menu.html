@@ -1,144 +1,244 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Flame On Restaurant</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flame On Restaurant</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <style>
-    body{
-      margin:0;
-      font-family:Arial, sans-serif;
-      background:#111;
-      color:white;
-    }
+<style>
+body{
+margin:0;
+font-family:Arial, sans-serif;
+background:#111;
+color:white;
+}
 
-    header{
-      background:#ff3c00;
-      padding:15px;
-      text-align:center;
-      font-size:22px;
-      font-weight:bold;
-    }
+header{
+background:#ff3c00;
+padding:15px;
+text-align:center;
+font-size:22px;
+font-weight:bold;
+}
 
-    #menu{
-      padding:15px;
-    }
+.contact-bar{
+text-align:center;
+background:#000;
+padding:10px;
+font-size:14px;
+}
 
-    .category{
-      margin-top:25px;
-    }
+.contact-bar a{
+color:#ff3c00;
+text-decoration:none;
+}
 
-    .category h2{
-      border-bottom:2px solid #ff3c00;
-      padding-bottom:5px;
-    }
+.section{
+padding:15px;
+}
 
-    .item{
-      display:flex;
-      justify-content:space-between;
-      padding:10px 0;
-      border-bottom:1px solid #333;
-    }
+.category{
+margin-top:25px;
+}
 
-    button{
-      background:#ff3c00;
-      color:white;
-      border:none;
-      padding:5px 12px;
-      cursor:pointer;
-    }
+.category h2{
+border-bottom:2px solid #ff3c00;
+padding-bottom:5px;
+}
 
-    #cart{
-      position:fixed;
-      bottom:0;
-      width:100%;
-      background:black;
-      padding:10px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-    }
-  </style>
+.item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:10px 0;
+border-bottom:1px solid #333;
+}
+
+.qty{
+display:flex;
+align-items:center;
+gap:5px;
+}
+
+.qty button{
+padding:3px 8px;
+}
+
+button{
+background:#ff3c00;
+color:white;
+border:none;
+padding:5px 12px;
+cursor:pointer;
+}
+
+#cart{
+position:fixed;
+bottom:0;
+width:100%;
+background:black;
+padding:10px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+input{
+padding:8px;
+width:60%;
+}
+</style>
 </head>
 
 <body>
 
-<header>
-  🔥 Flame On Restaurant
-</header>
+<header>🔥 Flame On Restaurant</header>
 
-<div id="menu"></div>
+<div class="contact-bar">
+📞 <a href="tel:+919090820969">+91 90908 20969</a> |
+<a href="tel:+919090691003">+91 9090691003</a>
+</div>
+
+<div class="section" id="menu"></div>
+
+<div class="section">
+<h2 style="color:#ff3c00;">🎉 Catering Service Available</h2>
+<p>Wedding | Birthday | Corporate | House Functions</p>
+</div>
+
+<div class="section">
+<h2 style="color:#ff3c00;">📦 Order Tracking</h2>
+<input type="text" id="orderId" placeholder="Enter Order ID">
+<button onclick="trackOrder()">Track</button>
+<p id="trackResult"></p>
+</div>
 
 <div id="cart">
-  <div>Total: ₹<span id="total">0</span></div>
-  <button onclick="sendWhatsApp()">Order Now</button>
+<div>Total: ₹<span id="total">0</span></div>
+<button onclick="sendWhatsApp()">Order Now</button>
 </div>
 
 <script>
 
 const menu = [
-  {
-    category: "STARTERS",
-    items: [
-      {name:"Crispy Corn", price:120},
-      {name:"French Fries", price:60},
-      {name:"Cheese Balls", price:80}
-    ]
-  },
-  {
-    category: "BURGERS",
-    items: [
-      {name:"Veg Burger", price:70},
-      {name:"Chicken Burger", price:80}
-    ]
-  }
+{
+category:"STARTERS",
+items:[
+{name:"Crispy Corn",price:120},
+{name:"French Fries",price:60},
+{name:"Cheese Balls",price:80},
+{name:"Chicken Lollipop",price:120},
+{name:"Chicken 65",price:140}
+]
+},
+{
+category:"BIRYANI",
+items:[
+{name:"Chicken Biryani",price:120},
+{name:"Special Chicken Biryani",price:150},
+{name:"Mutton Biryani",price:250},
+{name:"Veg Biryani",price:100}
+]
+},
+{
+category:"BURGERS",
+items:[
+{name:"Veg Patty Burger",price:70},
+{name:"Chicken Patty Burger",price:80},
+{name:"Double Cheese Chicken Burger",price:90}
+]
+}
 ];
 
-let total = 0;
-let cart = [];
+let cart={};
+let total=0;
 
-const menuDiv = document.getElementById("menu");
+const menuDiv=document.getElementById("menu");
 
-menu.forEach(section => {
+menu.forEach(section=>{
+const categoryDiv=document.createElement("div");
+categoryDiv.className="category";
 
-  const categoryDiv = document.createElement("div");
-  categoryDiv.className = "category";
+const heading=document.createElement("h2");
+heading.innerText=section.category;
+categoryDiv.appendChild(heading);
 
-  const heading = document.createElement("h2");
-  heading.innerText = section.category;
-  categoryDiv.appendChild(heading);
+section.items.forEach(item=>{
+const itemDiv=document.createElement("div");
+itemDiv.className="item";
 
-  section.items.forEach(item => {
+itemDiv.innerHTML=`
+<span>${item.name} - ₹${item.price}</span>
+<div class="qty">
+<button onclick="changeQty('${item.name}',${item.price},-1)">-</button>
+<span id="qty-${item.name}">0</span>
+<button onclick="changeQty('${item.name}',${item.price},1)">+</button>
+</div>
+`;
 
-    const itemDiv = document.createElement("div");
-    itemDiv.className = "item";
-
-    itemDiv.innerHTML = `
-      <span>${item.name} - ₹${item.price}</span>
-      <button onclick="addToCart('${item.name}', ${item.price})">Add</button>
-    `;
-
-    categoryDiv.appendChild(itemDiv);
-  });
-
-  menuDiv.appendChild(categoryDiv);
-
+categoryDiv.appendChild(itemDiv);
 });
 
-function addToCart(name, price){
-  total += price;
-  cart.push(name);
-  document.getElementById("total").innerText = total;
+menuDiv.appendChild(categoryDiv);
+});
+
+function changeQty(name,price,change){
+if(!cart[name]) cart[name]=0;
+
+cart[name]+=change;
+
+if(cart[name]<0) cart[name]=0;
+
+document.getElementById("qty-"+name).innerText=cart[name];
+
+calculateTotal();
+}
+
+function calculateTotal(){
+total=0;
+for(let item in cart){
+const menuItem=findPrice(item);
+total+=menuItem*cart[item];
+}
+document.getElementById("total").innerText=total;
+}
+
+function findPrice(name){
+for(let section of menu){
+for(let item of section.items){
+if(item.name===name) return item.price;
+}
+}
+return 0;
 }
 
 function sendWhatsApp(){
-  let message = "🔥 Flame On Order:%0A%0A";
-  cart.forEach(item => {
-    message += "• " + item + "%0A";
-  });
-  message += "%0ATotal: ₹" + total;
+if(total===0){
+alert("Please add items first!");
+return;
+}
 
-  window.open("https://wa.me/919090820969?text=" + message);
+let message="🔥 Flame On Restaurant Order:%0A%0A";
+
+for(let item in cart){
+if(cart[item]>0){
+message+="• "+item+" x"+cart[item]+"%0A";
+}
+}
+
+message+="%0ATotal: ₹"+total;
+
+window.open("https://wa.me/919090820969?text="+message);
+}
+
+function trackOrder(){
+const id=document.getElementById("orderId").value;
+
+if(id===""){
+document.getElementById("trackResult").innerText="Enter Order ID";
+}else{
+document.getElementById("trackResult").innerText=
+"Order "+id+" is being prepared 🍽️";
+}
 }
 
 </script>
