@@ -544,7 +544,6 @@ items:[
 ];
   
 
-let savedFoods = JSON.parse(localStorage.getItem("foods")) || [];
 let cart = {};
 
 function trackOrder(){
@@ -568,7 +567,9 @@ statusDiv.innerHTML = "<b>Status:</b> " + stages[randomStage];
 }
 
 function renderMenu(){
-const search = document.getElementById("search").value.toLowerCase();
+const searchInput = document.getElementById("search");
+const search = searchInput ? searchInput.value.toLowerCase() : "";
+
 const menuDiv = document.getElementById("menu");
 menuDiv.innerHTML = "";
 
@@ -634,10 +635,8 @@ cart[name]+=change;
 
 if(cart[name]<0) cart[name]=0;
 
-window.onload = function(){
 renderMenu();
 }
-
 
 function findPrice(name){
 for(let section of menu){
@@ -660,12 +659,6 @@ total += cart[item] * findPrice(item);
 document.getElementById("total").innerText = total;
 }
 
-window.onload = function(){
-renderMenu();
-}
-
-renderMenu();
-  
 function sendWhatsApp(){
 
 let total = document.getElementById("total").innerText;
@@ -692,5 +685,9 @@ message+="%0AThank You!";
 window.open("https://wa.me/919090820969?text="+message);
 
 cart = {};
+renderMenu();
+}
+
+window.onload = function(){
 renderMenu();
 }
