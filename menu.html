@@ -634,8 +634,10 @@ cart[name]+=change;
 
 if(cart[name]<0) cart[name]=0;
 
+window.onload = function(){
 renderMenu();
 }
+
 
 function findPrice(name){
 for(let section of menu){
@@ -656,6 +658,10 @@ total += cart[item] * findPrice(item);
 }
 
 document.getElementById("total").innerText = total;
+}
+
+window.onload = function(){
+renderMenu();
 }
 
 renderMenu();
