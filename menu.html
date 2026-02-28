@@ -543,12 +543,11 @@ items:[
 }
 ];
   
+
 let savedFoods = JSON.parse(localStorage.getItem("foods")) || [];
 let cart = {};
 
-let cart={};
 function trackOrder(){
-
 let orderID = document.getElementById("trackInput").value;
 let statusDiv = document.getElementById("trackingStatus");
 
@@ -565,27 +564,26 @@ let stages = [
 ];
 
 let randomStage = Math.floor(Math.random()*stages.length);
-
 statusDiv.innerHTML = "<b>Status:</b> " + stages[randomStage];
-
 }
+
 function renderMenu(){
-const search=document.getElementById("search").value.toLowerCase();
-const menuDiv=document.getElementById("menu");
-menuDiv.innerHTML="";
+const search = document.getElementById("search").value.toLowerCase();
+const menuDiv = document.getElementById("menu");
+menuDiv.innerHTML = "";
 
 menu.forEach(section=>{
 
-const filteredItems=section.items.filter(item =>
+const filteredItems = section.items.filter(item =>
 item.name.toLowerCase().includes(search)
 );
 
 if(filteredItems.length===0) return;
 
-const categoryDiv=document.createElement("div");
-categoryDiv.className="category";
+const categoryDiv = document.createElement("div");
+categoryDiv.className = "category";
 
-const heading=document.createElement("h2");
+const heading = document.createElement("h2");
 let icon="🍽️";
 
 if(section.category.includes("VEG")) icon="🥦";
@@ -613,9 +611,9 @@ itemDiv.className="item";
 itemDiv.innerHTML=`
 <span>${item.name} - ₹${item.price}</span>
 <div class="qty">
-<button onclick="changeQty('${item.name}',${item.price},-1)">-</button>
+<button onclick="changeQty('${item.name}',-1)">-</button>
 <span>${cart[item.name]}</span>
-<button onclick="changeQty('${item.name}',${item.price},1)">+</button>
+<button onclick="changeQty('${item.name}',1)">+</button>
 </div>
 `;
 
@@ -623,91 +621,41 @@ categoryDiv.appendChild(itemDiv);
 });
 
 menuDiv.appendChild(categoryDiv);
-updateTotal();
-}
+
 });
-}
-
-function changeQty(name,price,change){
-
-if(!cart[name]){
-cart[name] = 0;
-}
-
-cart[name] += change;
-
-if(cart[name] < 0){
-cart[name] = 0;
-}
 
 updateTotal();
+}
+
+function changeQty(name,change){
+if(!cart[name]) cart[name]=0;
+
+cart[name]+=change;
+
+if(cart[name]<0) cart[name]=0;
+
 renderMenu();
-}
-  
-function calculateTotal(){
-let total=0;
-for(let item in cart){
-const price=findPrice(item);
-total+=price*cart[item];
-}
-document.getElementById("total").innerText=total;
 }
 
 function findPrice(name){
 for(let section of menu){
 for(let item of section.items){
-if(item.name===name) return item.price;
+if(item.name===name){
+return item.price;
+}
 }
 }
 return 0;
 }
 
-function sendWhatsApp(){
-
-let total=document.getElementById("total").innerText;
-
-if(total==0){
-alert("Please add items first!");
-return;
-}
-
-let orderID = "FO" + Math.floor(Math.random()*10000);
-
-alert("Your Order ID: " + orderID + "\nUse this ID to track your order.");
-
-let message="🔥 Flame On Restaurant%0A";
-message+="Order ID: "+orderID+"%0A%0A";
+function updateTotal(){
+let total=0;
 
 for(let item in cart){
-if(cart[item]>0){
-message+="• "+item+" x"+cart[item]+"%0A";
-}
+total += cart[item] * findPrice(item);
 }
 
-message+="%0ATotal: ₹"+total;
-message+="%0A%0AThank You!";
-
-// Save order to localStorage
-let orders = JSON.parse(localStorage.getItem("orders")) || [];
-
-let newOrder = {
-  id: orderID,
-  items: {...cart},
-  total: total,
-  date: new Date().toLocaleString(),
-  status: "Pending"
-};
-
-orders.push(newOrder);
-
-localStorage.setItem("orders", JSON.stringify(orders));
-
-window.open("https://wa.me/919090820969?text="+message);
+document.getElementById("total").innerText = total;
 }
 
 renderMenu();
-
-</script>
-
-</body>
-</html>
