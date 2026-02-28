@@ -688,6 +688,8 @@ cart = {};
 renderMenu();
 }
 
-window.onload = function(){
-renderMenu();
-}
+document.addEventListener("DOMContentLoaded", function () {
+  setTimeout(function(){
+    renderMenu();
+  }, 100);
+});
