@@ -182,367 +182,6 @@ font-size:16px;
 </div>
 
 <script>
-const menu = [
-
-{
-category:"STARTERS - VEG",
-items:[
-{name:"Crispy Corn",price:120},
-{name:"Crispy Chilly Babycorn",price:150},
-{name:"Corn Salt & Pepper",price:150},
-{name:"Mushroom Salt & Pepper",price:150},
-{name:"Paneer Salt & Pepper",price:150},
-{name:"Paneer Singpuri Stick",price:170},
-{name:"Paneer Pakoda",price:100},
-{name:"Paneer Takatak",price:150},
-{name:"Mushroom Pakoda",price:100},
-{name:"Veg Finger",price:80},
-{name:"Potato Bytes",price:70},
-{name:"French Fries",price:60},
-{name:"Cheese Balls",price:80},
-{name:"Veg Cutlet",price:80}
-]
-},
-
-{
-category:"STARTERS - NON VEG",
-items:[
-{name:"Crispy Chicken Wings (4pcs)",price:100},
-{name:"Chicken Popcorn",price:100},
-{name:"Chicken Lollipop (4pcs)",price:120},
-{name:"Chicken 65 (Half)",price:140},
-{name:"Chicken Singapuri Stick",price:170},
-{name:"Sauce Tossed Chicken",price:200},
-{name:"Chicken Pakoda (Half)",price:60},
-{name:"Crispy Prawn",price:200},
-{name:"Prawn 65 (Half)",price:250},
-{name:"Schezwan Prawn (Half)",price:250},
-{name:"Schezwan Chicken (Half)",price:170},
-{name:"Chicken Nuggets (6pcs)",price:80},
-{name:"Chicken Salt & Pepper (Half)",price:150},
-{name:"Chicken Cutlet (2pcs)",price:100},
-{name:"Fish Finger (6pcs)",price:220},
-{name:"Chicken Barbeque Wings",price:200}
-]
-},
-
-{
-category:"INDIAN VEG CURRIES",
-items:[
-{name:"Mix Veg (Half)",price:100},
-{name:"Navaratna (Half)",price:150},
-{name:"Kadai Veg (Half)",price:120},
-{name:"Matar Paneer (Half)",price:140},
-{name:"Methi Paneer (Half)",price:170},
-{name:"Kaju Paneer (Half)",price:180},
-{name:"Paneer Masala (Half)",price:120},
-{name:"Paneer Butter Masala (Half)",price:150},
-{name:"Paneer Hyderabadi (Half)",price:160},
-{name:"Paneer Dopyaja (Half)",price:160},
-{name:"Kadai Paneer (Half)",price:150},
-{name:"Paneer Lababdar (Half)",price:170},
-{name:"Paneer Bhurji (Half)",price:150},
-{name:"Paneer Bharta (Half)",price:160},
-{name:"Paneer Kofta (Half)",price:170},
-{name:"Paneer Tikka Masala (Half)",price:180},
-{name:"Palak Paneer (Half)",price:160},
-{name:"Mushroom Rai (Half)",price:120},
-{name:"Mushroom Masala (Half)",price:120},
-{name:"Mushroom Dopyaja (Half)",price:160},
-{name:"Mushroom Mattar Masala (Half)",price:140},
-{name:"Mushroom Hyderabadi (Half)",price:150},
-{name:"Kadai Mushroom (Half)",price:150}
-]
-},
-
-{
-category:"PAPAD & SALAD",
-items:[
-{name:"Masala Papad",price:40},
-{name:"Fried Papad",price:20},
-{name:"Roasted Papad",price:20},
-{name:"Green Salad",price:30},
-{name:"Dahi Salad",price:40},
-{name:"Dahi Raita",price:30}
-]
-},
-
-{
-category:"BIRYANI SPECIAL",
-items:[
-{name:"Special Chicken Biryani",price:150},
-{name:"Chicken Biryani (Half)",price:120},
-{name:"Chicken Tikka Biryani (Half)",price:150},
-{name:"Tandoor Chicken Biryani",price:200},
-{name:"Egg Biryani",price:100},
-{name:"Prawn Biryani",price:200},
-{name:"Mutton Biryani",price:250},
-{name:"Fish Biryani",price:120},
-{name:"Veg Biryani",price:100}
-]
-},
-
-{
-category:"WRAP & ROLLS - VEG",
-items:[
-{name:"Mix Veg Roll",price:80},
-{name:"Chilly Paneer Roll",price:100},
-{name:"Chilly Mushroom Roll",price:100},
-{name:"Veg Spring Roll",price:50}
-]
-},
-
-{
-category:"WRAP & ROLLS - NON VEG",
-items:[
-{name:"Egg Chicken Roll",price:80},
-{name:"Egg Roll",price:70},
-{name:"Healthy Egg Chicken Wrap",price:120},
-{name:"Chicken Spring Roll",price:60}
-]
-},
-
-{
-category:"INDIAN NON VEG CURRIES",
-items:[
-{name:"Chicken Butter Masala",price:150},
-{name:"Chicken Hyderabadi",price:160},
-{name:"Chicken Dopyaja",price:160},
-{name:"Kadai Chicken",price:150},
-{name:"Chicken Lababdar",price:170},
-{name:"Masala Chicken",price:120},
-{name:"Chicken Moghlai",price:170},
-{name:"Punjabi Chicken",price:160},
-{name:"Tandoor Butter Chicken",price:180},
-{name:"Fish Tawa Fry",price:60},
-{name:"Fish Masala Fry",price:80},
-{name:"Elishi Fish Besara",price:200},
-{name:"Prawn Curry",price:200},
-{name:"Prawn Malai Curry",price:250},
-{name:"Crab Masala (As per size)",price:250},
-{name:"Pomfret Masala Fry (As per size)",price:100},
-{name:"Mutton Kassa",price:180},
-{name:"Mutton Curry",price:180}
-]
-},
-
-{
-category:"ROTI & TANDOORI",
-items:[
-{name:"Tawa Roti",price:7},
-{name:"Plain Paratha",price:15},
-{name:"Lachha Paratha",price:25},
-{name:"Aloo Paratha",price:30},
-{name:"Paneer Paratha",price:40},
-{name:"Tandoor Roti",price:15},
-{name:"Butter Tandoor Roti",price:20},
-{name:"Plain Nan",price:20},
-{name:"Butter Nan",price:25},
-{name:"Garlic Nan",price:40},
-{name:"Coriander Nan",price:30},
-{name:"Masala Nan",price:40},
-{name:"Masala Kulcha",price:50},
-{name:"Special Egg Chicken Moghlai Paratha",price:150},
-{name:"Special Mutton Keema Moghlai Paratha",price:180}
-]
-},
-
-{
-category:"RICE",
-items:[
-{name:"Plain Rice",price:30},
-{name:"Zeera Rice",price:60},
-{name:"Fried Rice",price:80},
-{name:"Veg Pulao",price:120},
-{name:"Veg Mixed Fried Rice",price:100},
-{name:"Egg Chicken Fried Rice",price:120},
-{name:"Prawn Mixed Fried Rice",price:150}
-]
-},
-
-{
-category:"DAL",
-items:[
-{name:"Plain Dal",price:30},
-{name:"Dal Fry",price:50},
-{name:"Dal Tadka",price:80},
-{name:"Dal Makhni",price:100},
-{name:"Dal Egg Tadka",price:100}
-]
-}
-,
-
-{
-category:"BURGER - VEG",
-items:[
-{name:"Veg Patty Burger",price:70},
-{name:"Cheese Patty Burger",price:80}
-]
-},
-
-{
-category:"BURGER - NON VEG",
-items:[
-{name:"Crispy Chicken Burger",price:80},
-{name:"Chicken Patty Burger",price:80},
-{name:"Double Cheese Chicken Burger",price:90}
-]
-},
-
-{
-category:"SANDWICH - VEG",
-items:[
-{name:"Veg Sandwich",price:70},
-{name:"Cheese Mix Veg Sandwich",price:80}
-]
-},
-
-{
-category:"SANDWICH - NON VEG",
-items:[
-{name:"Chicken Sandwich",price:70},
-{name:"Cheese Chicken Sandwich",price:80}
-]
-},
-
-{
-category:"PIZZA - VEG",
-items:[
-{name:"Veg Pizza (Small)",price:150},
-{name:"Veg Pizza (Medium)",price:250},
-{name:"Veg Pizza (Large)",price:350}
-]
-},
-
-{
-category:"PIZZA - NON VEG",
-items:[
-{name:"Non Veg Pizza (Small)",price:150},
-{name:"Non Veg Pizza (Medium)",price:250},
-{name:"Non Veg Pizza (Large)",price:350}
-]
-},
-
-{
-category:"MOMO",
-items:[
-{name:"Veg Momo",price:50},
-{name:"Non Veg Momo",price:60},
-{name:"Fried Veg Momo",price:60},
-{name:"Non Veg Fried Momo",price:70},
-{name:"Pan Fried Momo",price:80}
-]
-},
-
-{
-category:"CHINESE - VEG",
-items:[
-{name:"Chilly Paneer",price:120},
-{name:"Schezwan Paneer",price:170},
-{name:"Paneer Manchurian",price:150},
-{name:"Chilly Mushroom",price:120},
-{name:"Hot Garlic Paneer",price:170},
-{name:"Mushroom Manchurian",price:150},
-{name:"Veg Manchurian",price:100},
-{name:"Creamy Garlic Mushroom",price:150},
-{name:"Chilly Kobi",price:100}
-]
-},
-
-{
-category:"CHINESE - NON VEG",
-items:[
-{name:"Chilly Chicken",price:120},
-{name:"Chilly Prawn",price:200},
-{name:"Chilly Fish",price:150},
-{name:"Chicken Manchurian",price:150},
-{name:"Garlic Chicken",price:150},
-{name:"Hot Garlic Chicken",price:170},
-{name:"Prawn Manchurian",price:250},
-{name:"Schezwan Chicken",price:170},
-{name:"Schezwan Prawn",price:250}
-]
-},
-
-{
-category:"HOT SOUPS",
-items:[
-{name:"Veg Soup (Manchao/Hot & Sour/Burnt Garlic)",price:70},
-{name:"Non Veg Soup (Manchao/Hot & Sour/Burnt Garlic)",price:80}
-]
-},
-
-{
-category:"HOT & COLD BEVERAGES",
-items:[
-{name:"Hot Tea",price:15},
-{name:"Hot Coffee",price:40},
-{name:"Masala Drink",price:40},
-{name:"Fresh Lime Soda",price:40},
-{name:"Blue Lagoon Mojito",price:60},
-{name:"Green Apple Mojito",price:60},
-{name:"Mint Mojito",price:60},
-{name:"Plain Cold Drinks",price:30},
-{name:"Cold Coffee",price:70},
-{name:"Chocolate Shake",price:80}
-]
-},
-
-{
-category:"NOODLES / PASTA - VEG",
-items:[
-{name:"Mix Veg Noodles",price:80},
-{name:"Paneer Noodles",price:80},
-{name:"Mushroom Noodles",price:80},
-{name:"Schezwan Noodles",price:90},
-{name:"Chilly Garlic Noodles",price:100},
-{name:"Chawmin",price:80},
-{name:"White Sauce Pasta",price:120},
-{name:"Red Sauce Pasta",price:120}
-]
-},
-
-{
-category:"NOODLES / PASTA - NON VEG",
-items:[
-{name:"Egg Chicken Noodles",price:80},
-{name:"Egg Noodles",price:70},
-{name:"Chicken Noodles",price:70},
-{name:"Chilly Garlic Noodles (Non Veg)",price:100},
-{name:"Schezwan Noodles (Non Veg)",price:100},
-{name:"Prawn Mix Noodles",price:120},
-{name:"Chawmin (Non Veg)",price:80},
-{name:"White Sauce Pasta (Non Veg)",price:120},
-{name:"Red Sauce Pasta (Non Veg)",price:120}
-]
-},
-
-{
-category:"TANDOOR & KABABS - VEG",
-items:[
-{name:"Paneer Tikka",price:150},
-{name:"Tandoori Mushroom",price:120}
-]
-},
-
-{
-category:"TANDOOR & KABABS - NON VEG",
-items:[
-{name:"Full Leg Tandoor (1pc)",price:140},
-{name:"Whole Chicken Tandoor",price:450},
-{name:"Tandoori Fish",price:200},
-{name:"Malai Chicken Tikka",price:120},
-{name:"Hariyali Chicken Tikka",price:120},
-{name:"Chicken Tikka",price:100},
-{name:"Tangdi Kabab (2pcs)",price:170},
-{name:"Chicken Seekh Kabab",price:170},
-{name:"Mutton Seekh Kabab",price:250},
-{name:"Tandoori Prawn",price:250},
-{name:"Fish Tikka",price:200}
-]
-}
-];
-  
 
 let cart = {};
 
@@ -567,6 +206,7 @@ statusDiv.innerHTML = "<b>Status:</b> " + stages[randomStage];
 }
 
 function renderMenu(){
+
 const searchInput = document.getElementById("search");
 const search = searchInput ? searchInput.value.toLowerCase() : "";
 
@@ -585,21 +225,7 @@ const categoryDiv = document.createElement("div");
 categoryDiv.className = "category";
 
 const heading = document.createElement("h2");
-let icon="🍽️";
-
-if(section.category.includes("VEG")) icon="🥦";
-if(section.category.includes("NON VEG")) icon="🍗";
-if(section.category.includes("BIRYANI")) icon="🍛";
-if(section.category.includes("BURGER")) icon="🍔";
-if(section.category.includes("PIZZA")) icon="🍕";
-if(section.category.includes("MOMO")) icon="🥟";
-if(section.category.includes("NOODLES")) icon="🍜";
-if(section.category.includes("SOUP")) icon="🍲";
-if(section.category.includes("BEVERAGES")) icon="🥤";
-if(section.category.includes("RICE")) icon="🍚";
-if(section.category.includes("DAL")) icon="🥘";
-
-heading.innerHTML = icon + " " + section.category;
+heading.innerHTML = "🍽️ " + section.category;
 categoryDiv.appendChild(heading);
 
 filteredItems.forEach(item=>{
@@ -609,14 +235,28 @@ if(!cart[item.name]) cart[item.name]=0;
 const itemDiv=document.createElement("div");
 itemDiv.className="item";
 
-itemDiv.innerHTML=`
-<span>${item.name} - ₹${item.price}</span>
-<div class="qty">
-<button onclick="changeQty('${item.name}',-1)">-</button>
-<span>${cart[item.name]}</span>
-<button onclick="changeQty('${item.name}',1)">+</button>
-</div>
-`;
+const minusBtn = document.createElement("button");
+minusBtn.innerText = "-";
+minusBtn.onclick = function(){ changeQty(item.name,-1); };
+
+const plusBtn = document.createElement("button");
+plusBtn.innerText = "+";
+plusBtn.onclick = function(){ changeQty(item.name,1); };
+
+const qtySpan = document.createElement("span");
+qtySpan.innerText = cart[item.name];
+
+const qtyDiv = document.createElement("div");
+qtyDiv.className="qty";
+qtyDiv.appendChild(minusBtn);
+qtyDiv.appendChild(qtySpan);
+qtyDiv.appendChild(plusBtn);
+
+const nameSpan = document.createElement("span");
+nameSpan.innerText = item.name + " - ₹" + item.price;
+
+itemDiv.appendChild(nameSpan);
+itemDiv.appendChild(qtyDiv);
 
 categoryDiv.appendChild(itemDiv);
 });
@@ -630,11 +270,8 @@ updateTotal();
 
 function changeQty(name,change){
 if(!cart[name]) cart[name]=0;
-
 cart[name]+=change;
-
 if(cart[name]<0) cart[name]=0;
-
 renderMenu();
 }
 
@@ -651,11 +288,9 @@ return 0;
 
 function updateTotal(){
 let total=0;
-
 for(let item in cart){
 total += cart[item] * findPrice(item);
 }
-
 document.getElementById("total").innerText = total;
 }
 
@@ -689,7 +324,8 @@ renderMenu();
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  setTimeout(function(){
-    renderMenu();
-  }, 100);
+renderMenu();
 });
+
+</script>
+
