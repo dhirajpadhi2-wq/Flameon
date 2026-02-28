@@ -659,3 +659,32 @@ document.getElementById("total").innerText = total;
 }
 
 renderMenu();
+  
+function sendWhatsApp(){
+
+let total = document.getElementById("total").innerText;
+
+if(total == 0){
+alert("Please add items first!");
+return;
+}
+
+let orderID = "FO" + Math.floor(Math.random()*10000);
+
+let message="🔥 Flame On Restaurant%0A";
+message+="Order ID: "+orderID+"%0A%0A";
+
+for(let item in cart){
+if(cart[item] > 0){
+message+="• "+item+" x"+cart[item]+"%0A";
+}
+}
+
+message+="%0ATotal: ₹"+total;
+message+="%0AThank You!";
+
+window.open("https://wa.me/919090820969?text="+message);
+
+cart = {};
+renderMenu();
+}
